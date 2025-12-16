@@ -1,0 +1,7 @@
+echo "✨ Running lint-staged pre-commit hook..."
+pnpm exec lint-staged || { echo "❌ lint-staged failed"; exit 1; }
+
+echo "🧪 Running tests..."
+pnpm test:run || { echo "❌ tests failed"; exit 1; }
+
+echo "✅ Pre-commit checks passed."
