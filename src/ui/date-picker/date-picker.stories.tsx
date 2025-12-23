@@ -7,9 +7,17 @@ const meta = {
   component: DatePicker,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
+  render: ({ date, defaultDate, onChange }) => (
+    <DatePicker
+      date={date && new Date(date)}
+      defaultDate={defaultDate && new Date(defaultDate)}
+      onChange={onChange}
+    />
+  ),
 } satisfies Meta<typeof DatePicker>;
 
-export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export default meta;

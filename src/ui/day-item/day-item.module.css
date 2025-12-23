@@ -1,0 +1,17 @@
+.day {
+  width: 32px;
+  height: 32px;
+}
+
+.disabled {
+  color: #aaa;
+}
+
+.today {
+  color: #2f80ed;
+}
+
+.selected {
+  background-color: #2f80ed;
+  color: #fff;
+}
