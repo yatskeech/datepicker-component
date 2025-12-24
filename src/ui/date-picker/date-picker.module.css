@@ -1,9 +1,8 @@
 .picker {
   --font-sans: arial, helvetica, sans-serif;
-  --primary-color: #007aff;
-  --primary-hover-color: #007bff10;
+  --primary-color: #0069da;
+  --primary-hover-color: #0069da10;
   --text-color: #333;
-  --disabled-color: #aaa;
   --background-color: #fff;
   --border-color: #e1e1e1;
   --cell-size: 32px;
@@ -26,7 +25,7 @@
 
 .cell {
   &.disabled {
-    color: var(--disabled-color);
+    opacity: 0.35;
   }
 
   &.today {
