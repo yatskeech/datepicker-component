@@ -1,3 +1,5 @@
+import '../index.css';
+
 import clsx from 'clsx';
 
 import { DAYS_OF_WEEK } from '../../model/constants';

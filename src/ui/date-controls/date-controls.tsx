@@ -26,7 +26,7 @@ export function DateControls(props: DateControlsProps) {
 function PrevMonthButton({ onClick }: { onClick?: () => void }) {
   return (
     <button className={styles.button} onClick={onClick}>
-      <svg width="16" height="16" viewBox="0 0 16 16">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
         <path
           d="M11.7267 12L12.6667 11.06L9.61333 8L12.6667 4.94L11.7267 4L7.72667 8L11.7267 12Z"
           fill="currentColor"
@@ -36,6 +36,7 @@ function PrevMonthButton({ onClick }: { onClick?: () => void }) {
           fill="currentColor"
         />
       </svg>
+      <span className="sr-only">Previous month</span>
     </button>
   );
 }
@@ -43,7 +44,7 @@ function PrevMonthButton({ onClick }: { onClick?: () => void }) {
 function NextMonthButton({ onClick }: { onClick?: () => void }) {
   return (
     <button className={styles.button} onClick={onClick}>
-      <svg width="16" height="16" viewBox="0 0 16 16">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
         <path
           d="M4.27325 4L3.33325 4.94L6.38659 8L3.33325 11.06L4.27325 12L8.27325 8L4.27325 4Z"
           fill="currentColor"
@@ -53,6 +54,7 @@ function NextMonthButton({ onClick }: { onClick?: () => void }) {
           fill="currentColor"
         />
       </svg>
+      <span className="sr-only">Next month</span>
     </button>
   );
 }
