@@ -1,4 +1,45 @@
 .picker {
+  --font-sans: arial, helvetica, sans-serif;
+  --primary-color: #007aff;
+  --primary-hover-color: #007bff10;
+  --text-color: #333;
+  --disabled-color: #aaa;
+  --background-color: #fff;
+  --border-color: #e1e1e1;
+  --cell-size: 32px;
+
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background-color);
+  font-family: var(--font-sans);
+}
+
+.grid {
   display: grid;
   grid-template-columns: repeat(7, auto);
+}
+
+.header {
+  font-weight: 700;
+}
+
+.cell {
+  &.disabled {
+    color: var(--disabled-color);
+  }
+
+  &.today {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+
+  &.selected {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+  }
+
+  &:hover:not(:disabled, .selected) {
+    background-color: var(--primary-hover-color);
+  }
 }

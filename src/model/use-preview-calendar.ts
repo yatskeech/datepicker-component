@@ -12,7 +12,19 @@ type UsePreviewCalendarParams = {
 };
 
 export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
-  const [previewDate] = useState(selectedDate ?? new Date());
+  const [previewDate, setPreviewDate] = useState(selectedDate ?? new Date());
+
+  const onPrevMonth = () => {
+    setPreviewDate((previewDate) => {
+      return new Date(previewDate.getFullYear(), previewDate.getMonth() - 1);
+    });
+  };
+
+  const onNextMonth = () => {
+    setPreviewDate((previewDate) => {
+      return new Date(previewDate.getFullYear(), previewDate.getMonth() + 1);
+    });
+  };
 
   const previewDays = useMemo(() => {
     const [previousMonthDate, nextMonthDate] =
@@ -37,7 +49,7 @@ export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
     );
 
     const previousMonthDays: DayState[] = Array.from(
-      { length: currentMonthDays[0].date.getDate() - 1 },
+      { length: currentMonthDays[0].date.getDay() - 1 },
       (_, i) =>
         createDay(
           new Date(
@@ -68,5 +80,5 @@ export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
     return [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
   }, [previewDate, selectedDate]);
 
-  return { previewDays };
+  return { previewDate, previewDays, onPrevMonth, onNextMonth };
 }

@@ -1,0 +1,23 @@
+.cell {
+  display: flex;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: normal;
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: -1px;
+}
