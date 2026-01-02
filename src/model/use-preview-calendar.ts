@@ -30,35 +30,41 @@ export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
     const [previousMonthDate, nextMonthDate] =
       getSurroundingMonthDates(previewDate);
 
-    const currentMonthDaysCount = getDaysInMonth(previewDate);
     const previousMonthDaysCount = getDaysInMonth(previousMonthDate);
+    const currentMonthDaysCount = getDaysInMonth(previewDate);
 
-    const createDay = (date: Date, isDisabled?: boolean): DayState => ({
-      date,
-      isDisabled,
-      isToday: isSameDay(date, new Date()),
-      isSelected: !!selectedDate && isSameDay(date, selectedDate),
-    });
+    const createDay = (
+      dayStateParams: Pick<DayState, 'date' | 'isDisabled'>,
+    ): DayState => {
+      const { date, isDisabled = false } = dayStateParams;
+      const isToday = isSameDay(date, new Date());
+      const isSelected = !!selectedDate && isSameDay(date, selectedDate);
+      return { date, isDisabled, isToday, isSelected };
+    };
 
     const currentMonthDays: DayState[] = Array.from(
       { length: currentMonthDaysCount },
       (_, i) =>
-        createDay(
-          new Date(previewDate.getFullYear(), previewDate.getMonth(), i + 1),
-        ),
+        createDay({
+          date: new Date(
+            previewDate.getFullYear(),
+            previewDate.getMonth(),
+            i + 1,
+          ),
+        }),
     );
 
     const previousMonthDays: DayState[] = Array.from(
       { length: currentMonthDays[0].date.getDay() - 1 },
       (_, i) =>
-        createDay(
-          new Date(
+        createDay({
+          date: new Date(
             previousMonthDate.getFullYear(),
             previousMonthDate.getMonth(),
             previousMonthDaysCount - i,
           ),
-          true,
-        ),
+          isDisabled: true,
+        }),
     ).reverse();
 
     const nextMonthDaysCount =
@@ -67,14 +73,14 @@ export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
     const nextMonthDays: DayState[] = Array.from(
       { length: nextMonthDaysCount },
       (_, i) =>
-        createDay(
-          new Date(
+        createDay({
+          date: new Date(
             nextMonthDate.getFullYear(),
             nextMonthDate.getMonth(),
             i + 1,
           ),
-          true,
-        ),
+          isDisabled: true,
+        }),
     );
 
     return [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
