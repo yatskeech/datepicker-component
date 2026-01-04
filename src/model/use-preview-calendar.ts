@@ -55,7 +55,7 @@ export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
     );
 
     const previousMonthDays: DayState[] = Array.from(
-      { length: currentMonthDays[0].date.getDay() - 1 },
+      { length: (currentMonthDays[0].date.getDay() + 6) % 7 },
       (_, i) =>
         createDay({
           date: new Date(
