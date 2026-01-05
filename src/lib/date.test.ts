@@ -1,4 +1,9 @@
-import { getDaysInMonth, getSurroundingMonthDates, isSameDay } from './date';
+import {
+  getDaysInMonth,
+  getSurroundingMonthDates,
+  isSameDay,
+  parseDate,
+} from './date';
 
 describe('date utilities', () => {
   describe('getDaysInMonth', () => {
@@ -32,5 +37,20 @@ describe('date utilities', () => {
     ])('isSameDay(%j) should return %s', (dates, expected) => {
       expect(isSameDay(...dates)).toBe(expected);
     });
+  });
+
+  describe('parseDate', () => {
+    it.each([
+      ['31.01.2026', 'ru-RU', new Date(2026, 0, 31)],
+      ['01/31/2026', 'en-EN', new Date(2026, 0, 31)],
+      ['2026-01-31', 'sv-SE', new Date(2026, 0, 31)],
+      ['01/31/2026', undefined, new Date(2026, 0, 31)],
+      ['31.01.2026', undefined, null],
+    ])(
+      'parseDate(%j, %j) should return %j',
+      (inputDateString, locale, expected) => {
+        expect(parseDate(inputDateString, locale)).toEqual(expected);
+      },
+    );
   });
 });

@@ -2,5 +2,8 @@
 export default {
   extends: ['stylelint-config-standard', 'stylelint-config-idiomatic-order'],
   plugins: ['stylelint-order', 'stylelint-prettier'],
-  rules: { 'prettier/prettier': true },
+  rules: {
+    'prettier/prettier': true,
+    'selector-class-pattern': '^[a-z][a-zA-Z0-9]+$',
+  },
 };

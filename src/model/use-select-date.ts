@@ -12,7 +12,7 @@ export function useSelectDate(params: UseSelectDateParams) {
   const isControlled = date !== undefined;
   const [internalDate, setInternalDate] = useState(defaultDate);
 
-  const onSelectDate = (date: Date | null) => {
+  const selectDate = (date: Date | null) => {
     if (!isControlled) {
       setInternalDate(date);
     }
@@ -20,8 +20,5 @@ export function useSelectDate(params: UseSelectDateParams) {
     onChange?.(date);
   };
 
-  return {
-    date: isControlled ? date : internalDate,
-    onSelectDate,
-  };
+  return { date: isControlled ? date : internalDate, selectDate };
 }

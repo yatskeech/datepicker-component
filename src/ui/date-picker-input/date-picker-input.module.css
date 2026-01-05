@@ -1,0 +1,51 @@
+.inputWrapper {
+  position: relative;
+  display: flex;
+}
+
+.calendarButton {
+  left: 12px;
+}
+
+.closeButton {
+  right: 12px;
+}
+
+.calendarButton,
+.closeButton {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--support-color);
+  cursor: pointer;
+  transform: translateY(-50%);
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -1px;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 12px 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 15px;
+
+  &::placeholder {
+    color: var(--support-color);
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -1px;
+  }
+}

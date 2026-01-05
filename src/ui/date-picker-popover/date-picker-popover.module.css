@@ -1,0 +1,36 @@
+.popover {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background-color);
+  font-family: var(--font-sans);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+}
+
+.header {
+  font-weight: 700;
+}
+
+.cell {
+  &.disabled {
+    opacity: 0.35;
+  }
+
+  &.today {
+    border: 2px solid var(--primary-color);
+    font-weight: 600;
+  }
+
+  &.selected {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+  }
+
+  &:hover:not(:disabled, .selected) {
+    background-color: var(--primary-hover-color);
+  }
+}
