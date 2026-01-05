@@ -1,4 +1,5 @@
 import {
+  autoUpdate,
   flip,
   offset,
   useDismiss,
@@ -18,6 +19,7 @@ export function usePopover() {
     onOpenChange: setIsOpen,
     placement: 'bottom',
     middleware: [flip(), offset(OFFSET_POPOVER)],
+    whileElementsMounted: autoUpdate,
   });
 
   const focus = useFocus(context);
