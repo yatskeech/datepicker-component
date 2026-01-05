@@ -3,18 +3,19 @@
   display: flex;
 }
 
-.calendarButton {
-  left: 12px;
+.calendarIcon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  color: var(--support-color);
+  pointer-events: none;
+  transform: translateY(-50%);
 }
 
-.closeButton {
-  right: 12px;
-}
-
-.calendarButton,
 .closeButton {
   position: absolute;
   top: 50%;
+  right: 12px;
   display: flex;
   align-items: center;
   justify-content: center;

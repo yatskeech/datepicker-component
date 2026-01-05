@@ -1,4 +1,4 @@
-.picker {
+.variables {
   --font-sans: arial, helvetica, sans-serif;
   --primary-color: #0069da;
   --primary-hover-color: #0069da10;
@@ -7,9 +7,4 @@
   --background-color: #fff;
   --border-color: #e1e1e1;
   --cell-size: 32px;
-
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }

@@ -8,36 +8,28 @@ import styles from './date-picker-input.module.css';
 type DatePickerInputProps = {
   date: Date | null;
   onSelectDate: (date: Date | null) => void;
-  onTogglePicker: (isOpen: boolean) => void;
+  onToggleCalendar: (isOpen: boolean) => void;
   locale?: Intl.LocalesArgument;
 };
 
 export function DatePickerInput(props: DatePickerInputProps) {
-  const { date, onSelectDate, onTogglePicker, locale } = props;
-  const { inputRef, focusInput, blurInput } = useDateInput({ date, locale });
-
-  const handleOpenCalendar = () => {
-    onTogglePicker(true);
-    focusInput();
-  };
+  const { date, onSelectDate, onToggleCalendar, locale } = props;
+  const { inputRef } = useDateInput({ date, locale });
 
   const handleClearDate = () => {
-    onTogglePicker(false);
+    onToggleCalendar(false);
     onSelectDate(null);
-    blurInput();
-  };
-
-  const handleFocus = () => {
-    onTogglePicker(true);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) return onSelectDate(null);
     const inputDate = parseDate(e.target.value, locale);
     if (!inputDate) return;
     onSelectDate(inputDate);
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+    if (!e.target.value) return onSelectDate(null);
     const inputDate = parseDate(e.target.value, locale);
     if (inputDate) return onSelectDate(inputDate);
     e.target.value = date?.toLocaleDateString(locale) ?? '';
@@ -45,26 +37,18 @@ export function DatePickerInput(props: DatePickerInputProps) {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return;
-
-    onTogglePicker(false);
+    onToggleCalendar(false);
     e.currentTarget.blur();
   };
 
   return (
     <div className={styles.inputWrapper}>
-      <button
-        aria-label="Open calendar"
-        className={styles.calendarButton}
-        onClick={handleOpenCalendar}
-      >
-        <Icon name="calendar" />
-      </button>
+      <Icon name="calendar" className={styles.calendarIcon} />
       <input
         type="text"
         ref={inputRef}
         placeholder="Choose Date"
         className={styles.input}
-        onFocus={handleFocus}
         onChange={handleChange}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}

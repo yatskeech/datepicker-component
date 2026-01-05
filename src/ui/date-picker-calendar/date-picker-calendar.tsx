@@ -4,22 +4,22 @@ import { DAYS_OF_WEEK } from '../../model/constants';
 import { usePreviewCalendar } from '../../model/use-preview-calendar';
 import { CellItem } from '../cell-item/cell-item';
 import { DateControls } from '../date-controls/date-controls';
-import styles from './date-picker-popover.module.css';
+import styles from './date-picker-calendar.module.css';
 
-type DatePickerPopoverProps = {
+type DatePickerCalendarProps = {
   date: Date | null;
   onSelectDate: (date: Date | null) => void;
-  onTogglePicker: (isOpen: boolean) => void;
+  onToggleCalendar: (isOpen: boolean) => void;
 };
 
-export function DatePickerPopover(props: DatePickerPopoverProps) {
-  const { date, onSelectDate, onTogglePicker } = props;
+export function DatePickerCalendar(props: DatePickerCalendarProps) {
+  const { date, onSelectDate, onToggleCalendar } = props;
   const { previewDate, previewDays, onPrevMonth, onNextMonth } =
     usePreviewCalendar({ selectedDate: date });
 
   const handleCellClick = (date: Date) => {
     onSelectDate(date);
-    onTogglePicker(false);
+    onToggleCalendar(false);
   };
 
   return (

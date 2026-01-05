@@ -1,15 +1,37 @@
-import { type MouseEvent, useEffect, useState } from 'react';
+import {
+  flip,
+  offset,
+  useDismiss,
+  useFloating,
+  useFocus,
+  useInteractions,
+} from '@floating-ui/react';
+import { useState } from 'react';
+
+import { OFFSET_POPOVER } from './constants';
 
 export function usePopover() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleInnerClick = (e: MouseEvent) => e.stopPropagation();
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement: 'bottom',
+    middleware: [flip(), offset(OFFSET_POPOVER)],
+  });
 
-  useEffect(() => {
-    const handleOutsideClick = () => setIsOpen(false);
-    document.addEventListener('click', handleOutsideClick);
-    return () => document.removeEventListener('click', handleOutsideClick);
-  }, []);
+  const focus = useFocus(context);
+  const dismiss = useDismiss(context);
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    focus,
+    dismiss,
+  ]);
 
-  return { isOpen, setIsOpen, handleInnerClick };
+  return {
+    refs,
+    isOpen,
+    setIsOpen,
+    getReferenceProps,
+    getFloatingProps: () => ({ ...getFloatingProps(), style: floatingStyles }),
+  };
 }
