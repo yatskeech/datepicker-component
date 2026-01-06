@@ -7,15 +7,16 @@ import { DateControls } from '../date-controls/date-controls';
 import styles from './date-picker-calendar.module.css';
 
 type DatePickerCalendarProps = {
-  date: Date | null;
+  selectedDate: Date | null;
   onSelectDate: (date: Date | null) => void;
   onToggleCalendar: (isOpen: boolean) => void;
+  range?: { min?: Date; max?: Date };
 };
 
 export function DatePickerCalendar(props: DatePickerCalendarProps) {
-  const { date, onSelectDate, onToggleCalendar } = props;
+  const { selectedDate, range, onSelectDate, onToggleCalendar } = props;
   const { previewDate, previewDays, onPrevMonth, onNextMonth } =
-    usePreviewCalendar({ selectedDate: date });
+    usePreviewCalendar({ selectedDate, range });
 
   const handleCellClick = (date: Date) => {
     onSelectDate(date);

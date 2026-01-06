@@ -13,10 +13,16 @@ type DatePickerProps = UseSelectDateParams & {
   locale?: Intl.LocalesArgument;
 };
 
-export function DatePicker({ locale, ...rest }: DatePickerProps) {
+export function DatePicker(props: DatePickerProps) {
+  const { date, defaultDate, range, locale, onChange } = props;
   const { refs, isOpen, setIsOpen, getReferenceProps, getFloatingProps } =
     usePopover();
-  const { date, selectDate } = useSelectDate(rest);
+  const { selectedDate, selectDate } = useSelectDate({
+    date,
+    defaultDate,
+    range,
+    onChange,
+  });
 
   return (
     <>
@@ -26,10 +32,11 @@ export function DatePicker({ locale, ...rest }: DatePickerProps) {
         className={styles.variables}
       >
         <DatePickerInput
-          date={date}
+          selectedDate={selectedDate}
           onSelectDate={selectDate}
           onToggleCalendar={setIsOpen}
           locale={locale}
+          range={range}
         />
       </div>
       {isOpen && (
@@ -40,10 +47,11 @@ export function DatePicker({ locale, ...rest }: DatePickerProps) {
             className={styles.variables}
           >
             <DatePickerCalendar
-              key={date?.toLocaleDateString()}
-              date={date}
+              key={selectedDate?.toLocaleDateString()}
+              selectedDate={selectedDate}
               onSelectDate={selectDate}
               onToggleCalendar={setIsOpen}
+              range={range}
             />
           </div>
         </FloatingPortal>

@@ -6,15 +6,16 @@ import { Icon } from '../icon';
 import styles from './date-picker-input.module.css';
 
 type DatePickerInputProps = {
-  date: Date | null;
+  selectedDate: Date | null;
   onSelectDate: (date: Date | null) => void;
   onToggleCalendar: (isOpen: boolean) => void;
+  range?: { min?: Date; max?: Date };
   locale?: Intl.LocalesArgument;
 };
 
 export function DatePickerInput(props: DatePickerInputProps) {
-  const { date, onSelectDate, onToggleCalendar, locale } = props;
-  const { inputRef } = useDateInput({ date, locale });
+  const { selectedDate, onSelectDate, onToggleCalendar, locale, range } = props;
+  const { inputRef } = useDateInput({ date: selectedDate, locale });
 
   const handleClearDate = () => {
     onToggleCalendar(false);
@@ -31,8 +32,21 @@ export function DatePickerInput(props: DatePickerInputProps) {
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     if (!e.target.value) return onSelectDate(null);
     const inputDate = parseDate(e.target.value, locale);
-    if (inputDate) return onSelectDate(inputDate);
-    e.target.value = date?.toLocaleDateString(locale) ?? '';
+
+    if (!inputDate) {
+      e.target.value = selectedDate?.toLocaleDateString(locale) ?? '';
+      return;
+    }
+
+    const isLessThanMin = range?.min && inputDate < range.min;
+    const isMoreThanMax = range?.max && inputDate > range.max;
+
+    if (isLessThanMin || isMoreThanMax) {
+      e.target.value = selectedDate?.toLocaleDateString(locale) ?? '';
+      return;
+    }
+
+    onSelectDate(inputDate);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -53,7 +67,7 @@ export function DatePickerInput(props: DatePickerInputProps) {
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
       />
-      {props.date && (
+      {props.selectedDate && (
         <button
           aria-label="Clear date"
           className={styles.closeButton}

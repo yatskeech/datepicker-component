@@ -9,9 +9,11 @@ import { DAYS_IN_CALENDAR } from './constants';
 
 type UsePreviewCalendarParams = {
   selectedDate?: Date | null;
+  range?: { min?: Date; max?: Date };
 };
 
-export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
+export function usePreviewCalendar(params: UsePreviewCalendarParams) {
+  const { selectedDate, range } = params;
   const [previewDate, setPreviewDate] = useState(selectedDate ?? new Date());
 
   const onPrevMonth = () => {
@@ -37,9 +39,17 @@ export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
       dayStateParams: Pick<DayState, 'date' | 'isDisabled'>,
     ): DayState => {
       const { date, isDisabled = false } = dayStateParams;
+      const isLessThanMin = range?.min && date < range.min;
+      const isMoreThanMax = range?.max && date > range.max;
       const isToday = isSameDay(date, new Date());
       const isSelected = !!selectedDate && isSameDay(date, selectedDate);
-      return { date, isDisabled, isToday, isSelected };
+
+      return {
+        date,
+        isDisabled: isDisabled || isLessThanMin || isMoreThanMax,
+        isToday,
+        isSelected,
+      };
     };
 
     const currentMonthDays: DayState[] = Array.from(
@@ -84,7 +94,7 @@ export function usePreviewCalendar({ selectedDate }: UsePreviewCalendarParams) {
     );
 
     return [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
-  }, [previewDate, selectedDate]);
+  }, [previewDate, selectedDate, range]);
 
   return { previewDate, previewDays, onPrevMonth, onNextMonth };
 }
