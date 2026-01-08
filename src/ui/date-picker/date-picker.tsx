@@ -9,7 +9,7 @@ import { DatePickerCalendar } from '../date-picker-calendar/date-picker-calendar
 import { DatePickerInput } from '../date-picker-input/date-picker-input';
 import styles from './date-picker.module.css';
 
-type DatePickerProps = UseSelectDateParams & {
+export type DatePickerProps = UseSelectDateParams & {
   locale?: Intl.LocalesArgument;
 };
 

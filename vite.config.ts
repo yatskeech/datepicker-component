@@ -7,6 +7,8 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+
 const dirname =
   typeof __dirname !== 'undefined'
     ? __dirname
@@ -14,7 +16,23 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    dts({ rollupTypes: true, tsconfigPath: './tsconfig.app.json' }),
+  ],
+  build: {
+    outDir: 'dist',
+    lib: {
+      name: 'DatePicker',
+      entry: 'src/index.ts',
+      fileName: 'date-picker',
+      formats: ['es', 'umd', 'cjs'],
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom'],
+      output: { globals: { react: 'React', 'react-dom': 'ReactDOM' } },
+    },
+  },
   test: {
     projects: [
       {

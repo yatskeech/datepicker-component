@@ -1,5 +1,6 @@
 /** @type {import("stylelint").Config} */
 export default {
+  ignoreFiles: ['**/dist/**', '**/node_modules/**'],
   extends: ['stylelint-config-standard', 'stylelint-config-idiomatic-order'],
   plugins: ['stylelint-order', 'stylelint-prettier'],
   rules: {
