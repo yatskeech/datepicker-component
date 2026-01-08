@@ -3,7 +3,7 @@ import {
   getSurroundingMonthDates,
   isSameDay,
   parseDate,
-} from './date';
+} from '../../src/lib/date';
 
 describe('date utilities', () => {
   describe('getDaysInMonth', () => {

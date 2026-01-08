@@ -9,9 +9,9 @@
     "lint:fix": "eslint . --fix && stylelint \"**/*.{css,module.css}\" --fix",
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
-    "test:run": "vitest run",
-    "test:watch": "vitest watch",
     "storybook": "storybook dev -p 6006",
+    "storybook:test": "vitest run --project storybook",
+    "unit:test": "vitest run --project unit",
     "build-storybook": "storybook build",
     "prepare": "husky"
   },

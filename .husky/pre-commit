@@ -2,6 +2,7 @@ echo "✨ Running lint-staged pre-commit hook..."
 pnpm exec lint-staged || { echo "❌ lint-staged failed"; exit 1; }
 
 echo "🧪 Running tests..."
-pnpm test:run || { echo "❌ tests failed"; exit 1; }
+pnpm unit:test || { echo "❌ unit tests failed"; exit 1; }
+pnpm storybook:test || { echo "❌ storybook tests failed"; exit 1; }
 
 echo "✅ Pre-commit checks passed."

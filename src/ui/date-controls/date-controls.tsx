@@ -19,7 +19,7 @@ export function DateControls(props: DateControlsProps) {
       >
         <Icon name="prev" />
       </button>
-      <span className={styles.title}>
+      <span className={styles.title} role="heading" aria-level={2}>
         {previewDate.toLocaleDateString('en-US', {
           month: 'long',
           year: 'numeric',

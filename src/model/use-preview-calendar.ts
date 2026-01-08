@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react';
+import { type CSSProperties, useMemo, useState } from 'react';
 
 import {
   getDaysInMonth,
   getSurroundingMonthDates,
   isSameDay,
 } from '../lib/date';
-import { DAYS_IN_CALENDAR } from './constants';
+import { DAYS_IN_CALENDAR, DAYS_IN_WEEK, WEEKS_IN_CALENDAR } from './constants';
 
 type UsePreviewCalendarParams = {
   selectedDate?: Date | null;
@@ -96,5 +96,18 @@ export function usePreviewCalendar(params: UsePreviewCalendarParams) {
     return [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
   }, [previewDate, selectedDate, range]);
 
-  return { previewDate, previewDays, onPrevMonth, onNextMonth };
+  const weeks = useMemo(
+    () =>
+      Array.from({ length: WEEKS_IN_CALENDAR }).map((_, i) =>
+        previewDays.slice(i * DAYS_IN_WEEK, (i + 1) * DAYS_IN_WEEK),
+      ),
+    [previewDays],
+  );
+
+  const rowStyles: CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${DAYS_IN_WEEK}, auto)`,
+  };
+
+  return { previewDate, weeks, rowStyles, onPrevMonth, onNextMonth };
 }

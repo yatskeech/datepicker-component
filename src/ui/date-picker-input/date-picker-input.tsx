@@ -25,23 +25,16 @@ export function DatePickerInput(props: DatePickerInputProps) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) return onSelectDate(null);
     const inputDate = parseDate(e.target.value, locale);
-    if (!inputDate) return;
-    onSelectDate(inputDate);
+    if (inputDate) return onSelectDate(inputDate);
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    if (!e.target.value) return onSelectDate(null);
     const inputDate = parseDate(e.target.value, locale);
 
-    if (!inputDate) {
-      e.target.value = selectedDate?.toLocaleDateString(locale) ?? '';
-      return;
-    }
+    const isLessThanMin = inputDate && range?.min && inputDate < range.min;
+    const isMoreThanMax = inputDate && range?.max && inputDate > range.max;
 
-    const isLessThanMin = range?.min && inputDate < range.min;
-    const isMoreThanMax = range?.max && inputDate > range.max;
-
-    if (isLessThanMin || isMoreThanMax) {
+    if (!inputDate || isLessThanMin || isMoreThanMax) {
       e.target.value = selectedDate?.toLocaleDateString(locale) ?? '';
       return;
     }

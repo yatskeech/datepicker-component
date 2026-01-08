@@ -40,7 +40,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           globals: true,
-          include: ['src/**/*.test.{ts,tsx,js,jsx}'],
+          include: ['tests/**/*.test.{ts,tsx,js,jsx}'],
           browser: { enabled: false },
         },
       },
