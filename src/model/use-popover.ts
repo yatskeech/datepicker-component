@@ -29,7 +29,7 @@ export function usePopover(): UsePopoverReturn {
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
-    placement: 'bottom',
+    placement: 'bottom-start',
     middleware: [flip(), offset(OFFSET_POPOVER)],
     whileElementsMounted: autoUpdate,
   });

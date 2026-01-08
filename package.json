@@ -27,7 +27,8 @@
         "types": "./dist/date-picker.d.ts",
         "default": "./dist/date-picker.cjs"
       }
-    }
+    },
+    "./index.css": "./dist/date-picker.css"
   },
   "scripts": {
     "build": "tsc -b && vite build",
