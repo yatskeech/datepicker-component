@@ -1,90 +1,102 @@
 # 📅 Datepicker Component
 
-A lightweight, accessible, and themable React date picker component designed for modern web apps. Built with TypeScript, Vite, and a composable hook-based model, this component is focused on clarity, testability, and easy integration.
+A lightweight, customizable, and accessible React date picker component for selecting a single date. Built with TypeScript and Vite, the project is organized into small hooks and UI components for easy integration and testability.
 
-## ✨ Features
+## ✨ Key features
 
-- 📅 Small and focused UI component for selecting single dates
-- ♿ Accessible keyboard support and screen-reader friendly
-- 🧩 Composable hooks for input, popover, preview calendar, and selection logic
-- 🎨 Easy to style via CSS Modules
-- 🧪 Unit-tested utilities with Vitest
+- 🎯 Small focused UI for single-date selection
+- ♿ Accessibility: keyboard navigation and screen reader support
+- 🧭 Logic separated into hooks: input, popover, preview calendar, date selection
+- 🎨 Styles via CSS Modules
+- 🧪 Unit-tested utilities using Vitest
 
-## 🚀 Quick Start
+## 🚀 Quick start
 
-1. 📦 Install dependencies:
+1. ➕ Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-2. ▶️ Start the dev server (Vite):
+2. 🧪 Run Storybook for local UI development (recommended):
 
 ```bash
-pnpm dev
+pnpm storybook
 ```
 
-3. ✅ Run tests (Vitest):
+3. 🛠️ Build the package (produces `dist`):
 
 ```bash
-pnpm test
+pnpm build
 ```
 
-(Adjust commands to match the scripts in `package.json`.)
+4. ✅ Run unit tests (Vitest):
+
+```bash
+pnpm unit:test
+```
+
+Additional useful scripts:
+
+- 🔍 Storybook checks: `pnpm storybook:test`
+- 🧹 Lint: `pnpm lint` (fix: `pnpm lint:fix`)
+- 🧼 Format: `pnpm format` (fix: `pnpm format:fix`)
+
+⚠️ Note: there is no `dev` script for a plain Vite dev server in `package.json`; use Storybook for interactive component development (`pnpm storybook`). The package build is handled by `pnpm build`.
 
 ## 👉 Usage
 
-Import the component and use it in your React app:
+During development you can import the `DatePicker` component directly from the source. The component is exported as a named export, not a default export:
 
 ```tsx
 import React from 'react';
-import DatePicker from './src/ui/date-picker/date-picker';
+import 'datepicker-component/index.css'; // 📦 optional shared styles from built package
+import { DatePicker } from './src/ui/date-picker/date-picker';
 
 export default function Example() {
   return (
-    <div>
-      <h3>Pick a date</h3>
-      <DatePicker />
-    </div>
+    <DatePicker
+      defaultDate={new Date()}
+      onChange={(d) => console.log('selected', d)}
+    />
   );
 }
 ```
 
-Notes:
+After building/publishing, the package exposes entry points from `dist` (see `main`, `module`, `types` in `package.json`). Import from the package root when consuming the built package.
 
-- 📁 The component is implemented under `src/ui/date-picker/date-picker.tsx`.
-- 🔧 Low-level hooks live in `src/model/` (for example, `use-date-input.ts`, `use-select-date.ts`, `use-popover.ts`).
+## 🗂️ Project layout (key files)
 
-## 🗂️ Project Structure
-
-- `src/ui/` — UI components and styles (CSS Modules)
-  - 🔹 `date-picker/` — top-level `DatePicker` UI component
-  - 🔹 `date-picker-input/`, `date-picker-calendar/` — subcomponents
-- `src/model/` — hooks and state management for the picker
-- `src/lib/` — shared utilities and tests (e.g., `date.ts`, `date.test.ts`)
-- `src/stories/` — Storybook stories for interactive demos
-
-## 🛠️ Development
-
-- Keep components small and focused: UI in `src/ui`, logic in `src/model`.
-- Use the existing CSS Modules patterns (see `*.module.css`) for styling.
-- Add unit tests to `src/lib` (or alongside the component) using Vitest.
-
-Suggested local workflow:
-
-```bash
-pnpm install
-pnpm dev    # run local dev server
-pnpm test   # run unit tests
-```
+- 📁 UI component: `src/ui/date-picker/date-picker.tsx`
+- 🧠 Hooks: `src/model/use-date-input.ts`, `src/model/use-select-date.ts`
+- 🧰 Utilities and tests: `src/lib/date.ts`, `src/lib/date.test.ts`
+- 📚 Storybook stories: `stories/date-picker.stories.tsx`
 
 ## 🧪 Testing
 
-- Utilities have example tests in `src/lib/date.test.ts`.
-- Use `vitest` for unit tests and snapshots where applicable.
+- ✅ Unit tests: `pnpm unit:test` (Vitest)
+- 🧪 Storybook test project: `pnpm storybook:test`
+
+## 📦 Build & publish
+
+- 🛠️ Build: `pnpm build` (runs `tsc -b` then `vite build`).
+- 📦 Built artifacts go to `dist`; package exports are defined in `package.json` (`main`/`module`/`types`).
+- 🔎 Verify `package.json` fields and version before publishing.
+
+## ⚙️ Dependencies & requirements
+
+- 🔗 Peer dependencies: React ^18 or ^19 (see `package.json`).
+- ⚙️ Runtime dependencies: `@floating-ui/react`, `clsx`.
+- 🧩 Dev dependencies include Storybook, Vitest, ESLint, Stylelint, Prettier, Playwright, TypeScript, Vite, and tooling used for CI and local development.
+
+## 🛠️ Development notes
+
+- 🧩 Keep UI in `src/ui` and logic in `src/model`.
+- 🎨 Use CSS Modules for component styling (`*.module.css`).
+- 🧪 Add unit tests for logic and Storybook stories for UI variations.
 
 ## 🤝 Contributing
 
-- Open issues for bugs or feature requests.
-- Prefer small, focused PRs that include tests and update stories or examples.
-- Maintain consistent code style and TypeScript types.
+- 🐛 Open issues for bugs or feature requests.
+- ✨ Prefer small, focused PRs that include tests and update stories where applicable.
+- 🔒 Husky is set up (`prepare` script) for local git hooks; use lint-staged to run checks before commits.
